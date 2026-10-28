@@ -1,0 +1,45 @@
+vertices = ['A', 'B', 'C', 'D', 'E', 'F']
+matrix = [
+    [0, 1, 1, 0, 0, 0],
+    [1, 0, 1, 1, 0, 0],
+    [1, 1, 0, 0, 1, 0],
+    [0, 1, 0, 0, 1, 1],
+    [0, 0, 1, 1, 0, 1],
+    [0, 0, 0, 1, 1, 0]
+]
+adj = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'E'],
+    'D': ['B', 'E', 'F'],
+    'E': ['C', 'D', 'F'],
+    'F': ['D', 'E']
+}
+def dfs(start):
+    visited = set()
+    stack = [start]
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            print(vertex, end=" ")
+            visited.add(vertex)
+            index = vertices.index(vertex)
+            for i in range(len(vertices) - 1, -1, -1):
+                if (matrix[index][i] == 1 and
+                        vertices[i] not in visited):
+                    stack.append(vertices[i])
+def bfs(start):
+    visited = {start}
+    queue = [start]
+    while queue:
+        vertex = queue.pop(0)
+        print(vertex, end=" ")
+        for neighbour in adj[vertex]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+print("DFS:", end=" ")
+dfs('A')
+print("\nBFS:", end=" ")
+bfs('A')
+print()
